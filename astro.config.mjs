@@ -3,9 +3,13 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com', // Replace with actual site URL
+  // Replace with actual site URL
+  site: 'https://example.com',
+
   integrations: [
     tailwind({
       applyBaseStyles: false,
@@ -13,6 +17,7 @@ export default defineConfig({
     sitemap(),
     react(),
   ],
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh'],
@@ -20,5 +25,7 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
   output: 'static',
+  adapter: cloudflare(),
 });
