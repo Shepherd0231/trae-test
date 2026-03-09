@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/Section.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import { Search, Filter, ChevronRight, LayoutGrid, List } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const categories = ['All', 'Software', 'Cloud', 'Security', 'Hardware'];
+
+const products = [
+  {
+    id: 'p1',
+    name: 'Smart Analytics Pro',
+    description: 'The ultimate tool for tracking business growth and user behavior.',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+    category: 'Software',
+  },
+  {
+    id: 'p2',
+    name: 'EcoCloud Storage',
+    description: 'Sustainable and high-performance cloud storage for modern enterprises.',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2070',
+    category: 'Cloud',
+  },
+  {
+    id: 'p3',
+    name: 'NexGen Security Hub',
+    description: 'A comprehensive security solution for all your digital assets.',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: 'Security',
+  },
+  {
+    id: 'p4',
+    name: 'Quantum Server X1',
+    description: 'Next-generation hardware for lightning-fast data processing.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=2070',
+    category: 'Hardware',
+  },
+  {
+    id: 'p5',
+    name: 'AI Vision Engine',
+    description: 'Advanced computer vision algorithms for real-time image analysis.',
+    image: 'https://images.unsplash.com/photo-1555255707-c07966488bc0?auto=format&fit=crop&q=80&w=2070',
+    category: 'Software',
+  },
+  {
+    id: 'p6',
+    name: 'Cyber Shield VPN',
+    description: 'Secure and anonymous internet access for your entire organization.',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: 'Security',
+  },
+];
+---
+
+<BaseLayout title={`Products | Company Name`}>
+  <!-- Hero Section -->
+  <div class="bg-slate-900 py-20 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-6">Our Innovative Products</h1>
+      <p class="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Discover the tools and solutions designed to propel your business forward.
+      </p>
+    </div>
+  </div>
+
+  <!-- Filter & Search -->
+  <Section background="slate" className="py-8 border-b border-slate-200">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+      <!-- Categories -->
+      <div class="flex flex-wrap items-center gap-2">
+        {categories.map(category => (
+          <button
+            class={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              category === 'All'
+                ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20'
+                : 'bg-white text-slate-600 border border-slate-200 hover:border-brand-300 hover:text-brand-600'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <!-- Search & View -->
+      <div class="flex items-center gap-4">
+        <div class="relative flex-grow min-w-[300px]">
+          <Search class="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search products..."
+            class="w-full bg-white border border-slate-200 rounded-full px-12 py-3 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+          />
+        </div>
+        <div class="hidden md:flex items-center border rounded-lg overflow-hidden bg-white">
+          <button class="p-3 text-brand-600 bg-brand-50 transition-colors">
+            <LayoutGrid class="h-4 w-4" />
+          </button>
+          <button class="p-3 text-slate-400 hover:bg-slate-50 transition-colors border-l">
+            <List class="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Products Grid -->
+  <Section background="white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      {products.map(product => (
+        <ProductCard {...product} />
+      ))}
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-20 flex items-center justify-center gap-4">
+      <button class="btn btn-secondary px-4 py-2 disabled:opacity-50" disabled>
+        Previous
+      </button>
+      <div class="flex items-center gap-2">
+        <button class="w-10 h-10 rounded-lg bg-brand-600 text-white font-bold text-sm shadow-md">1</button>
+        <button class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:border-brand-300 hover:text-brand-600 transition-all">2</button>
+        <button class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:border-brand-300 hover:text-brand-600 transition-all">3</button>
+      </div>
+      <button class="btn btn-secondary px-4 py-2 flex items-center gap-2">
+        Next
+        <ChevronRight class="h-4 w-4" />
+      </button>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section background="brand" className="bg-brand-900">
+    <div class="text-center text-white max-w-3xl mx-auto py-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Need a custom solution?</h2>
+      <p class="text-lg text-slate-300 mb-10 leading-relaxed">
+        Our team can help you build the perfect technology suite for your specific business requirements.
+      </p>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-xl">
+        Talk to an Expert
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

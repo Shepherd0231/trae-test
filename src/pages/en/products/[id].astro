@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/Section.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import { ShoppingCart, CheckCircle, ArrowLeft, Download, Share2 } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { id: 'p1' } },
+    { params: { id: 'p2' } },
+    { params: { id: 'p3' } },
+    { params: { id: 'p4' } },
+    { params: { id: 'p5' } },
+    { params: { id: 'p6' } },
+  ];
+}
+
+const { id } = Astro.params;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Mock data for the product
+const product = {
+  id,
+  name: 'Smart Analytics Pro',
+  description: 'The ultimate tool for tracking business growth and user behavior. Our platform provides deep insights into how your customers interact with your products, allowing you to make data-driven decisions that drive revenue and customer loyalty.',
+  price: '$199/month',
+  image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+  category: 'Software',
+  features: [
+    'Real-time data tracking',
+    'Advanced user behavior analysis',
+    'Customizable reporting dashboards',
+    'Seamless integration with popular CRM tools',
+    'AI-powered growth recommendations',
+  ],
+  specs: [
+    { label: 'Platform', value: 'Web, iOS, Android' },
+    { label: 'API Support', value: 'RESTful, GraphQL' },
+    { label: 'Data Export', value: 'CSV, JSON, PDF' },
+    { label: 'Storage', value: 'Unlimited' },
+  ],
+};
+
+const relatedProducts = [
+  {
+    id: 'p2',
+    name: 'EcoCloud Storage',
+    description: 'Sustainable and high-performance cloud storage for modern enterprises.',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2070',
+    category: 'Cloud',
+  },
+  {
+    id: 'p3',
+    name: 'NexGen Security Hub',
+    description: 'A comprehensive security solution for all your digital assets.',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: 'Security',
+  },
+];
+---
+
+<BaseLayout title={`${product.name} | Company Name`}>
+  <div class="bg-white py-12 border-b border-slate-100">
+    <div class="container-custom">
+      <nav class="flex items-center gap-2 text-sm text-slate-500 mb-8">
+        <a href={`/${lang}/`} class="hover:text-brand-600 transition-colors">Home</a>
+        <span>/</span>
+        <a href={`/${lang}/products`} class="hover:text-brand-600 transition-colors">Products</a>
+        <span>/</span>
+        <span class="text-slate-900 font-medium">{product.name}</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <!-- Product Image Gallery -->
+        <div class="space-y-6">
+          <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl border border-slate-100 group">
+            <img
+              src={product.image}
+              alt={product.name}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div class="grid grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map(i => (
+              <div class="aspect-square rounded-lg overflow-hidden border-2 border-slate-100 hover:border-brand-500 cursor-pointer transition-all">
+                <img src={product.image} alt={`${product.name} ${i}`} class="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="space-y-8">
+          <div>
+            <span class="inline-block bg-brand-50 text-brand-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+              {product.category}
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+              {product.name}
+            </h1>
+            <p class="text-xl text-slate-600 leading-relaxed">
+              {product.description}
+            </p>
+          </div>
+
+          <div class="space-y-4 py-8 border-y border-slate-100">
+            <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wider">Key Features</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {product.features.map(feature => (
+                <li class="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
+                  <CheckCircle class="h-5 w-5 text-emerald-500 shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="btn btn-primary flex-grow py-4 text-lg font-bold shadow-xl shadow-brand-500/20 flex items-center justify-center gap-2 hover:translate-y-[-2px] active:translate-y-0 transition-all">
+              <ShoppingCart class="h-5 w-5" />
+              Get Started Now
+            </button>
+            <button class="btn btn-secondary py-4 px-8 text-lg font-bold border-slate-200 flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
+              <Download class="h-5 w-5" />
+              Technical Manual
+            </button>
+          </div>
+
+          <div class="flex items-center gap-6 pt-4 border-t border-slate-100">
+            <span class="text-sm font-semibold text-slate-500 flex items-center gap-2">
+              <Share2 class="h-4 w-4" /> Share Product:
+            </span>
+            <div class="flex items-center gap-4">
+              <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors">Facebook</a>
+              <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors">Twitter</a>
+              <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Specs Section -->
+  <Section title="Technical Specifications" background="slate" className="py-20">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        {product.specs.map((spec, index) => (
+          <div class={`p-6 flex items-center justify-between border-b md:border-b-0 border-slate-50 ${index % 2 === 0 ? 'md:border-r' : ''}`}>
+            <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">{spec.label}</span>
+            <span class="text-slate-900 font-semibold">{spec.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- Related Products -->
+  <Section title="Related Products" background="white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {relatedProducts.map(related => (
+        <ProductCard {...related} />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="brand" className="bg-brand-600 text-white">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">Have questions about {product.name}?</h2>
+        <p class="text-brand-100 text-lg opacity-90 leading-relaxed max-w-xl">
+          Our product experts are here to help you find the best solution for your business.
+        </p>
+      </div>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-xl">
+        Consultation
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

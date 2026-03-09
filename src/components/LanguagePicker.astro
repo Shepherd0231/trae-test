@@ -1,0 +1,40 @@
+---
+import { languages } from '../i18n/ui';
+import { getLangFromUrl } from '../i18n/utils';
+import { Globe } from 'lucide-react';
+
+const currentLang = getLangFromUrl(Astro.url);
+
+// Function to translate current path to other language
+function translatePath(lang: string, url: URL) {
+  const segments = url.pathname.split('/');
+  // segments[1] is the current lang
+  segments[1] = lang;
+  return segments.join('/');
+}
+---
+
+<div class="relative group">
+  <button
+    class="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors p-2 rounded-md hover:bg-slate-100"
+    aria-label="Select language"
+  >
+    <Globe class="h-4 w-4" />
+    <span class="uppercase">{currentLang}</span>
+  </button>
+  
+  <div class="absolute right-0 top-full mt-1 hidden group-hover:block min-w-[120px] bg-white border rounded-lg shadow-lg overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+    <div class="flex flex-col py-1">
+      {Object.entries(languages).map(([lang, label]) => (
+        <a
+          href={translatePath(lang, Astro.url)}
+          class={`px-4 py-2 text-sm hover:bg-brand-50 hover:text-brand-600 transition-colors ${
+            lang === currentLang ? 'bg-slate-50 text-brand-600 font-semibold' : 'text-slate-600'
+          }`}
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>

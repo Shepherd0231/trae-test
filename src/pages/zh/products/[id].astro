@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/Section.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import { ShoppingCart, CheckCircle, ArrowLeft, Download, Share2 } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { id: 'p1' } },
+    { params: { id: 'p2' } },
+    { params: { id: 'p3' } },
+    { params: { id: 'p4' } },
+    { params: { id: 'p5' } },
+    { params: { id: 'p6' } },
+  ];
+}
+
+const { id } = Astro.params;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Mock data for the product
+const product = {
+  id,
+  name: '智能分析专业版',
+  description: '追踪业务增长和用户行为的终极工具。我们的平台可以深入洞察客户与产品的交互方式，助您做出数据驱动的决策，从而提高营收和客户忠诚度。',
+  price: '¥1299/月',
+  image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+  category: '软件',
+  features: [
+    '实时数据追踪',
+    '高级用户行为分析',
+    '可定制的报告看板',
+    '与主流 CRM 工具无缝集成',
+    'AI 驱动的增长建议',
+  ],
+  specs: [
+    { label: '平台', value: 'Web, iOS, Android' },
+    { label: 'API 支持', value: 'RESTful, GraphQL' },
+    { label: '数据导出', value: 'CSV, JSON, PDF' },
+    { label: '存储', value: '无限制' },
+  ],
+};
+
+const relatedProducts = [
+  {
+    id: 'p2',
+    name: '生态云存储',
+    description: '为现代企业设计的可持续、高性能云存储。',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2070',
+    category: '云服务',
+  },
+  {
+    id: 'p3',
+    name: '新一代安全中心',
+    description: '为您所有数字资产提供的全面安全解决方案。',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: '安全',
+  },
+];
+---
+
+<BaseLayout title={`${product.name} | 公司名称`}>
+  <div class="bg-white py-12 border-b border-slate-100">
+    <div class="container-custom">
+      <nav class="flex items-center gap-2 text-sm text-slate-500 mb-8">
+        <a href={`/${lang}/`} class="hover:text-brand-600 transition-colors">首页</a>
+        <span>/</span>
+        <a href={`/${lang}/products`} class="hover:text-brand-600 transition-colors">产品中心</a>
+        <span>/</span>
+        <span class="text-slate-900 font-medium">{product.name}</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <!-- Product Image Gallery -->
+        <div class="space-y-6">
+          <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl border border-slate-100 group">
+            <img
+              src={product.image}
+              alt={product.name}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+          <div class="grid grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map(i => (
+              <div class="aspect-square rounded-lg overflow-hidden border-2 border-slate-100 hover:border-brand-500 cursor-pointer transition-all">
+                <img src={product.image} alt={`${product.name} ${i}`} class="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="space-y-8">
+          <div>
+            <span class="inline-block bg-brand-50 text-brand-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+              {product.category}
+            </span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">
+              {product.name}
+            </h1>
+            <p class="text-xl text-slate-600 leading-relaxed">
+              {product.description}
+            </p>
+          </div>
+
+          <div class="space-y-4 py-8 border-y border-slate-100">
+            <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wider">核心特性</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {product.features.map(feature => (
+                <li class="flex items-start gap-3 text-slate-600 text-sm leading-relaxed">
+                  <CheckCircle class="h-5 w-5 text-emerald-500 shrink-0" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button class="btn btn-primary flex-grow py-4 text-lg font-bold shadow-xl shadow-brand-500/20 flex items-center justify-center gap-2 hover:translate-y-[-2px] active:translate-y-0 transition-all">
+              <ShoppingCart class="h-5 w-5" />
+              立即开始
+            </button>
+            <button class="btn btn-secondary py-4 px-8 text-lg font-bold border-slate-200 flex items-center justify-center gap-2 hover:bg-slate-50 transition-all">
+              <Download class="h-5 w-5" />
+              技术手册
+            </button>
+          </div>
+
+          <div class="flex items-center gap-6 pt-4 border-t border-slate-100">
+            <span class="text-sm font-semibold text-slate-500 flex items-center gap-2">
+              <Share2 class="h-4 w-4" /> 分享产品：
+            </span>
+            <div class="flex items-center gap-4">
+              <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors">微信</a>
+              <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors">微博</a>
+              <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors">领英</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Specs Section -->
+  <Section title="技术参数" background="slate" className="py-20">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        {product.specs.map((spec, index) => (
+          <div class={`p-6 flex items-center justify-between border-b md:border-b-0 border-slate-50 ${index % 2 === 0 ? 'md:border-r' : ''}`}>
+            <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">{spec.label}</span>
+            <span class="text-slate-900 font-semibold">{spec.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <!-- Related Products -->
+  <Section title="相关产品" background="white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {relatedProducts.map(related => (
+        <ProductCard {...related} />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="brand" className="bg-brand-600 text-white">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">对 {product.name} 有疑问？</h2>
+        <p class="text-brand-100 text-lg opacity-90 leading-relaxed max-w-xl">
+          我们的产品专家随时为您提供帮助，为您业务寻找最佳解决方案。
+        </p>
+      </div>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-xl">
+        在线咨询
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

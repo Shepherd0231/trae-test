@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { Mail, Phone, MapPin, Clock, MessageSquare, HelpCircle } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const contactInfo = [
+  {
+    title: '发送邮件',
+    description: '我们通常在 24 小时内回复。',
+    value: 'contact@company.com',
+    icon: Mail,
+    color: 'text-brand-600 bg-brand-50',
+  },
+  {
+    title: '拨打电话',
+    description: '周一至周五，上午 9 点至下午 6 点。',
+    value: '+1 (555) 123-4567',
+    icon: Phone,
+    color: 'text-emerald-600 bg-emerald-50',
+  },
+  {
+    title: '亲临办公地点',
+    description: '我们位于硅谷的总公司。',
+    value: '123 Innovation Drive, CA 94043',
+    icon: MapPin,
+    color: 'text-amber-600 bg-amber-50',
+  },
+];
+
+const faqs = [
+  {
+    question: '如何获取定制报价？',
+    answer: '只需填写联系表单并告知您的具体需求，我们的团队将在 24-48 小时内为您提供量身定制的报价。',
+  },
+  {
+    question: '你们提供国际化支持吗？',
+    answer: '是的，我们为全球客户提供跨时区的 24/7 技术支持，支持多种语言。',
+  },
+  {
+    question: '我可以申请产品演示吗？',
+    answer: '当然可以！请在联系表单的主题栏注明“演示申请”，我们将安排产品专家为您进行现场演示。',
+  },
+];
+---
+
+<BaseLayout title={`联系我们 | 公司名称`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070"
+        alt="Contact Us Background"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
+    </div>
+    <div class="container-custom relative z-10 text-center text-white">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6">让我们共创辉煌</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        无论您是对我们的产品有疑问，需要技术支持，还是想讨论定制化解决方案，我们的团队都随时待命。
+      </p>
+    </div>
+  </div>
+
+  <!-- Contact Info & Form -->
+  <Section background="white">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+      <div class="space-y-12">
+        <div class="space-y-6">
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-900">联系我们</h2>
+          <p class="text-lg text-slate-600 leading-relaxed">
+            请填写表单，我们的团队将尽快与您联系。我们期待您的垂询！
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {contactInfo.map(item => (
+            <div class="group p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-brand-200 hover:shadow-lg transition-all">
+              <div class={`p-3 rounded-xl w-fit mb-6 ${item.color} group-hover:scale-110 transition-transform`}>
+                <item.icon class="h-6 w-6" />
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
+              <p class="text-sm text-slate-500 mb-4">{item.description}</p>
+              <div class="text-brand-600 font-bold break-words">{item.value}</div>
+            </div>
+          ))}
+          
+          <div class="group p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-brand-200 hover:shadow-lg transition-all">
+            <div class="p-3 rounded-xl w-fit mb-6 text-indigo-600 bg-indigo-50 group-hover:scale-110 transition-transform">
+              <Clock class="h-6 w-6" />
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">办公时间</h3>
+            <p class="text-sm text-slate-500 mb-4">对于紧急事项，我们提供 24/7 全天候支持。</p>
+            <div class="text-slate-900 font-bold">周一 - 周五: 上午 9点 - 下午 6点</div>
+          </div>
+        </div>
+
+        <!-- FAQ Summary -->
+        <div class="pt-8 border-t border-slate-100">
+          <h3 class="text-xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+            <HelpCircle class="h-6 w-6 text-brand-600" />
+            常见问题
+          </h3>
+          <div class="space-y-6">
+            {faqs.map(faq => (
+              <div class="group bg-white p-6 rounded-2xl border border-slate-100 hover:border-brand-100 hover:shadow-md transition-all">
+                <h4 class="text-slate-900 font-bold mb-2 flex items-center justify-between group-hover:text-brand-600 transition-colors">
+                  {faq.question}
+                </h4>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div class="mt-8 text-center">
+            <a href={`/${lang}/faq`} class="text-brand-600 font-bold text-sm hover:underline uppercase tracking-wider">
+              查看所有常见问题
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form Component -->
+      <div class="sticky top-24">
+        <ContactForm />
+      </div>
+    </div>
+  </Section>
+
+  <!-- Map Section (Placeholder) -->
+  <Section background="slate" className="py-0 px-0">
+    <div class="aspect-[21/9] w-full bg-slate-200 relative overflow-hidden">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-center p-8 bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white max-w-md">
+          <MapPin class="h-12 w-12 text-brand-600 mx-auto mb-6 animate-bounce" />
+          <h3 class="text-2xl font-bold text-slate-900 mb-2">参观我们的总部</h3>
+          <p class="text-slate-600 mb-6">123 Innovation Drive, Silicon Valley, CA 94043</p>
+          <a href="#" class="btn btn-primary px-8 py-3 font-bold">获取路线</a>
+        </div>
+      </div>
+      <img
+        src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=2066"
+        alt="Map Placeholder"
+        class="w-full h-full object-cover grayscale opacity-50"
+      />
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section background="brand" className="bg-brand-600 text-white">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-6">需要即时技术协助？</h2>
+        <p class="text-xl text-brand-100 opacity-90 leading-relaxed">
+          我们的专属支持团队全天候为您服务，帮助您解决任何问题。
+        </p>
+      </div>
+      <div class="flex gap-4">
+        <button class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-2xl flex items-center gap-2">
+          <MessageSquare class="h-5 w-5" />
+          在线聊天
+        </button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

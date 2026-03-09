@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { ArrowRight, CheckCircle, Globe, Users, TrendingUp } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const cases = [
+  {
+    id: 'c1',
+    title: '全球物流优化',
+    client: 'LogiTech Solutions',
+    industry: '物流',
+    result: '效率提升 45%',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=2070',
+    tags: ['云存储', '实时分析'],
+    description: '我们利用智能分析专业版和生态云存储解决方案，帮助 LogiTech Solutions 优化了其全球供应链。',
+  },
+  {
+    id: 'c2',
+    title: '金融安全全面升级',
+    client: 'SecureBank Intl',
+    industry: '金融',
+    result: '2 年内零安全事故',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070',
+    tags: ['网络安全', 'AI 视觉'],
+    description: 'SecureBank Intl 部署了我们的新一代安全中心，以保护其数字资产并确保符合全球金融法规。',
+  },
+  {
+    id: 'c3',
+    title: '智慧城市基础设施',
+    client: 'Metropolis Gov',
+    industry: '公共部门',
+    result: '能源成本降低 30%',
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=2070',
+    tags: ['物联网', '硬件'],
+    description: '我们的量子服务器 X1 和定制物联网解决方案帮助 Metropolis Gov 打造了更高效、更可持续的城市环境。',
+  },
+];
+---
+
+<BaseLayout title={`案例展示 | 公司名称`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426"
+        alt="Case Studies Background"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
+    </div>
+    <div class="container-custom relative z-10 text-center text-white">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6">真实业务的真实成果</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        了解我们如何帮助各行各业的公司实现目标并完成业务转型。
+      </p>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <Section background="white" className="py-20 border-b border-slate-100">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+      <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+        <div class="flex items-center justify-center mb-6">
+          <Globe class="h-10 w-10 text-brand-600" />
+        </div>
+        <div class="text-4xl font-extrabold text-slate-900 mb-2">50+</div>
+        <div class="text-slate-500 font-bold uppercase tracking-widest text-sm">覆盖国家</div>
+      </div>
+      <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+        <div class="flex items-center justify-center mb-6">
+          <Users class="h-10 w-10 text-brand-600" />
+        </div>
+        <div class="text-4xl font-extrabold text-slate-900 mb-2">1,000+</div>
+        <div class="text-slate-500 font-bold uppercase tracking-widest text-sm">成功案例</div>
+      </div>
+      <div class="p-8 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+        <div class="flex items-center justify-center mb-6">
+          <TrendingUp class="h-10 w-10 text-brand-600" />
+        </div>
+        <div class="text-4xl font-extrabold text-slate-900 mb-2">95%</div>
+        <div class="text-slate-500 font-bold uppercase tracking-widest text-sm">客户满意度</div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Case Studies List -->
+  <Section background="white">
+    <div class="space-y-24 md:space-y-32">
+      {cases.map((item, index) => (
+        <div class={`flex flex-col lg:flex-row items-center gap-16 ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+          <div class="w-full lg:w-1/2 group">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-100">
+              <img
+                src={item.image}
+                alt={item.title}
+                class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+          </div>
+          <div class="w-full lg:w-1/2 space-y-8">
+            <div class="space-y-4">
+              <div class="flex items-center gap-4 text-xs text-brand-600 font-bold uppercase tracking-widest">
+                <span class="bg-brand-50 px-3 py-1.5 rounded-full">{item.industry}</span>
+                <span class="text-slate-400">•</span>
+                <span class="text-slate-500">{item.client}</span>
+              </div>
+              <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">
+                {item.title}
+              </h2>
+            </div>
+            
+            <p class="text-xl text-slate-600 leading-relaxed">
+              {item.description}
+            </p>
+
+            <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100 flex items-center gap-4">
+              <div class="p-3 bg-white rounded-xl shadow-sm">
+                <TrendingUp class="h-6 w-6 text-brand-600" />
+              </div>
+              <div>
+                <div class="text-sm font-bold text-brand-600 uppercase tracking-wider">关键成果</div>
+                <div class="text-xl font-extrabold text-slate-900">{item.result}</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              {item.tags.map(tag => (
+                <span class="px-4 py-1.5 bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-widest rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <a
+              href={`/${lang}/cases/${item.id}`}
+              class="inline-flex items-center gap-3 text-brand-600 font-extrabold text-lg group/link"
+            >
+              阅读完整案例
+              <ArrowRight class="h-5 w-5 transition-transform group-hover/link:translate-x-2" />
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Client Logo Wall -->
+  <Section background="slate" className="py-20 bg-slate-50 border-y border-slate-100">
+    <div class="text-center mb-12">
+      <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest">深受行业领袖信任</h3>
+    </div>
+    <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+      <div class="text-2xl font-black text-slate-600">GOOGLE</div>
+      <div class="text-2xl font-black text-slate-600">AMAZON</div>
+      <div class="text-2xl font-black text-slate-600">MICROSOFT</div>
+      <div class="text-2xl font-black text-slate-600">TESLA</div>
+      <div class="text-2xl font-black text-slate-600">NETFLIX</div>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section background="brand" className="bg-brand-600 text-white">
+    <div class="text-center max-w-3xl mx-auto py-12">
+      <h2 class="text-3xl md:text-5xl font-extrabold mb-8">想要获得类似的成果吗？</h2>
+      <p class="text-xl text-brand-100 mb-12 opacity-90 leading-relaxed">
+        让我们共同探讨我们的创新解决方案如何助您的业务更上一层楼。
+      </p>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-12 py-5 text-lg font-bold shadow-2xl">
+        开启您的成功故事
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

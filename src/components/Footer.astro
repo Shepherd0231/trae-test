@@ -1,0 +1,97 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const footerNav = [
+  { label: t('nav.products'), href: `/${lang}/products` },
+  { label: t('nav.cases'), href: `/${lang}/cases` },
+  { label: t('nav.news'), href: `/${lang}/news` },
+  { label: t('nav.about'), href: `/${lang}/about` },
+  { label: t('nav.faq'), href: `/${lang}/faq` },
+];
+
+const legalNav = [
+  { label: t('footer.privacy'), href: `/${lang}/privacy` },
+  { label: t('footer.terms'), href: `/${lang}/terms` },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-slate-900 text-slate-300 border-t border-slate-800">
+  <div class="container-custom section-padding grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <!-- Brand -->
+    <div class="space-y-4">
+      <a href={`/${lang}/`} class="text-2xl font-bold text-white">Logo</a>
+      <p class="text-sm leading-relaxed max-w-xs">
+        {t('home.hero.subtitle')}
+      </p>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="hover:text-white transition-colors"><Facebook class="h-5 w-5" /></a>
+        <a href="#" class="hover:text-white transition-colors"><Twitter class="h-5 w-5" /></a>
+        <a href="#" class="hover:text-white transition-colors"><Linkedin class="h-5 w-5" /></a>
+        <a href="#" class="hover:text-white transition-colors"><Instagram class="h-5 w-5" /></a>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div class="space-y-4">
+      <h4 class="text-lg font-semibold text-white uppercase tracking-wider">Quick Links</h4>
+      <nav class="flex flex-col space-y-2">
+        {footerNav.map(item => (
+          <a href={item.href} class="text-sm hover:text-white transition-colors">{item.label}</a>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="space-y-4">
+      <h4 class="text-lg font-semibold text-white uppercase tracking-wider">{t('footer.contact')}</h4>
+      <div class="space-y-3 text-sm">
+        <div class="flex items-start gap-3">
+          <MapPin class="h-5 w-5 text-brand-500 shrink-0" />
+          <span>123 Innovation Drive, Silicon Valley, CA 94043</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <Phone class="h-5 w-5 text-brand-500 shrink-0" />
+          <span>+1 (555) 123-4567</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <Mail class="h-5 w-5 text-brand-500 shrink-0" />
+          <span>contact@company.com</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="space-y-4">
+      <h4 class="text-lg font-semibold text-white uppercase tracking-wider">Newsletter</h4>
+      <p class="text-sm leading-relaxed">
+        Subscribe to our newsletter to receive the latest updates and news.
+      </p>
+      <form class="flex flex-col space-y-2">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          class="bg-slate-800 border-slate-700 text-white rounded-md px-4 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none border transition-all"
+        />
+        <button type="submit" class="btn btn-primary w-full">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-800 py-8">
+    <div class="container-custom flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+      <div class="flex items-center space-x-4">
+        {legalNav.map(item => (
+          <a href={item.href} class="hover:text-white transition-colors">{item.label}</a>
+        ))}
+      </div>
+      <p>&copy; {currentYear} Company Name. {t('footer.rights')}</p>
+      <a href="/sitemap.xml" class="hover:text-white transition-colors">Sitemap</a>
+    </div>
+  </div>
+</footer>

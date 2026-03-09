@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/Section.astro';
+import NewsCard from '../../../components/NewsCard.astro';
+import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, MessageSquare } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { id: 'n1' } },
+    { params: { id: 'n2' } },
+    { params: { id: 'n3' } },
+    { params: { id: 'n4' } },
+  ];
+}
+
+const { id } = Astro.params;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Mock data for the news article
+const article = {
+  id,
+  title: 'The Future of Cloud Computing',
+  excerpt: 'Exploring how AI and machine learning are revolutionizing cloud infrastructure and data processing for enterprises of all sizes.',
+  content: `
+    <p class="text-xl text-slate-700 font-medium mb-10 leading-relaxed">
+      The landscape of cloud computing is undergoing a seismic shift. As we move further into the decade, the integration of Artificial Intelligence (AI) and Machine Learning (ML) is no longer just a luxury—it's becoming the backbone of modern cloud infrastructure.
+    </p>
+    
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">AI-Driven Automation</h2>
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      One of the most significant trends is the move toward autonomous cloud environments. AI algorithms are now capable of managing resource allocation, predicting traffic spikes, and automatically scaling infrastructure without human intervention. This not only reduces operational costs but also ensures peak performance around the clock.
+    </p>
+
+    <div class="my-16 rounded-3xl overflow-hidden shadow-2xl group">
+      <img
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072"
+        alt="AI Cloud Illustration"
+        class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+      />
+    </div>
+
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">Edge Computing Synergy</h2>
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      The rise of edge computing is another critical factor. By processing data closer to where it's generated, businesses can achieve near-zero latency for mission-critical applications. When combined with centralized cloud power, this hybrid approach offers the best of both worlds: local speed and global scale.
+    </p>
+
+    <blockquote class="my-12 p-10 bg-brand-50 border-l-8 border-brand-600 rounded-2xl italic text-2xl font-bold text-slate-900 leading-snug">
+      "The cloud is no longer just a place to store data; it's the engine that powers innovation and drives digital transformation."
+    </blockquote>
+
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">Security in the AI Era</h2>
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      As threats become more sophisticated, so must our defenses. AI-powered security systems can now detect anomalies in real-time, identifying potential breaches before they cause damage. This proactive approach to cybersecurity is essential in an era where data is a company's most valuable asset.
+    </p>
+
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      In conclusion, the future of cloud computing is bright, driven by the convergence of AI, edge computing, and advanced security. Businesses that embrace these technologies will be well-positioned to lead in the digital era.
+    </p>
+  `,
+  date: 'March 15, 2026',
+  author: 'Sarah Johnson',
+  image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072',
+  category: 'Industry',
+  authorImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1974',
+};
+
+const relatedArticles = [
+  {
+    id: 'n2',
+    title: 'Sustainable Tech Initiatives',
+    excerpt: 'Our commitment to green energy and reducing the carbon footprint of digital operations.',
+    date: 'March 10, 2026',
+    author: 'Michael Chen',
+    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2070',
+    category: 'Company',
+  },
+  {
+    id: 'n3',
+    title: 'Smart Analytics Pro 2.0 Released',
+    excerpt: 'The latest version of our analytics tool features real-time predictive modeling.',
+    date: 'March 5, 2026',
+    author: 'Emily Davis',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+    category: 'Product',
+  },
+];
+---
+
+<BaseLayout title={`${article.title} | Company News`}>
+  <!-- Article Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src={article.image}
+        alt={article.title}
+        class="w-full h-full object-cover opacity-30"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
+    </div>
+    <div class="container-custom relative z-10 text-center text-white">
+      <a
+        href={`/${lang}/news`}
+        class="inline-flex items-center gap-2 text-brand-400 font-bold text-sm uppercase tracking-widest mb-8 hover:text-brand-300 transition-colors"
+      >
+        <ArrowLeft class="h-4 w-4" />
+        Back to News
+      </a>
+      <div class="flex items-center justify-center gap-4 text-xs text-brand-400 font-bold uppercase tracking-widest mb-6">
+        <span class="bg-brand-900/50 px-3 py-1.5 rounded-full border border-brand-500/30">{article.category}</span>
+        <span class="text-slate-400">•</span>
+        <span class="text-slate-300">{article.date}</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-10 max-w-4xl mx-auto leading-tight">
+        {article.title}
+      </h1>
+      <div class="flex items-center justify-center gap-4">
+        <img src={article.authorImage} alt={article.author} class="w-12 h-12 rounded-full border-2 border-brand-500 object-cover" />
+        <div class="text-left">
+          <div class="text-white font-bold">{article.author}</div>
+          <div class="text-slate-400 text-xs uppercase tracking-widest">Industry Expert</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Content -->
+  <Section background="white" className="py-20 relative">
+    <div class="max-w-4xl mx-auto">
+      <!-- Article Body -->
+      <div class="prose prose-lg prose-slate max-w-none" set:html={article.content} />
+
+      <!-- Share & Tags -->
+      <div class="mt-20 pt-12 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div class="flex items-center gap-6">
+          <span class="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <Share2 class="h-4 w-4" /> Share:
+          </span>
+          <div class="flex items-center gap-4">
+            <a href="#" class="p-3 rounded-full bg-slate-50 text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
+              <Facebook class="h-5 w-5" />
+            </a>
+            <a href="#" class="p-3 rounded-full bg-slate-50 text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
+              <Twitter class="h-5 w-5" />
+            </a>
+            <a href="#" class="p-3 rounded-full bg-slate-50 text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
+              <Linkedin class="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          {['Cloud', 'AI', 'Security', 'Future'].map(tag => (
+            <span class="px-4 py-1.5 bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Author Bio -->
+      <div class="mt-16 p-8 md:p-12 bg-slate-50 rounded-3xl border border-slate-100 flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
+        <img src={article.authorImage} alt={article.author} class="w-24 h-24 rounded-2xl object-cover shadow-lg shrink-0" />
+        <div class="space-y-4">
+          <h4 class="text-xl font-bold text-slate-900">About {article.author}</h4>
+          <p class="text-slate-600 leading-relaxed">
+            Sarah Johnson is a seasoned technology journalist and industry analyst with over 15 years of experience covering the intersection of business and cloud computing. Her insights have been featured in major tech publications worldwide.
+          </p>
+          <div class="flex items-center justify-center md:justify-start gap-4">
+            <a href="#" class="text-brand-600 text-sm font-bold hover:underline">View All Posts</a>
+            <span class="text-slate-300">|</span>
+            <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors"><Twitter class="h-4 w-4" /></a>
+            <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors"><Linkedin class="h-4 w-4" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Related Articles -->
+  <Section title="You Might Also Like" background="slate" className="py-20 border-t border-slate-200">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {relatedArticles.map(related => (
+        <NewsCard {...related} />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="brand" className="bg-brand-600 text-white">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">Want more tech insights?</h2>
+        <p class="text-brand-100 text-lg opacity-90 leading-relaxed max-w-xl">
+          Subscribe to our newsletter to receive the latest news and industry trends directly in your inbox.
+        </p>
+      </div>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-xl">
+        Subscribe Now
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

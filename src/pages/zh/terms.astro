@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { FileText, Shield, Gavel, Scale, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = [
+  {
+    title: '1. 接受条款',
+    content: '通过访问或使用我们的网站，即表示您同意受这些服务条款以及所有适用法律和法规的约束。如果您不同意这些条款中的任何一项，您将被禁止使用或访问本网站。',
+    icon: Gavel,
+  },
+  {
+    title: '2. 使用许可',
+    content: '我们允许您临时下载本网站上材料（信息或软件）的一份副本，仅供个人、非商业性的临时查看。这是许可的授予，而不是所有权的转让。',
+    icon: FileText,
+  },
+  {
+    title: '3. 免责声明',
+    content: '我们网站上的材料按“原样”提供。我们不作任何明示或暗示的保证，并在此声明并否定所有其他保证，包括但不限于适销性、特定用途的适用性或不侵犯知识产权或其他权利侵犯的暗示保证或条件。',
+    icon: AlertTriangle,
+  },
+  {
+    title: '4. 责任限制',
+    content: '在任何情况下，对于因使用或无法使用我们网站上的材料而造成的任何损害（包括但不限于因数据或利润损失或由于业务中断而造成的损害），我们的公司或其供应商均不承担任何责任。',
+    icon: Scale,
+  },
+  {
+    title: '5. 准据法',
+    content: '这些条款和条件受加利福尼亚州法律管辖并根据其解释，您不可撤销地服从该州或该地点法院的专属管辖权。',
+    icon: Shield,
+  },
+];
+---
+
+<BaseLayout title={`服务条款 | 公司名称`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white animate-in fade-in slide-in-from-bottom duration-700">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-8">服务条款</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        在使用我们的服务之前，请仔细阅读这些条款。使用我们的网站即表示您同意遵守并受这些条款的约束。
+      </p>
+      <div class="mt-12 text-sm font-bold text-slate-400 uppercase tracking-widest">最后更新：2026年3月</div>
+    </div>
+  </div>
+
+  <!-- Policy Content -->
+  <Section background="white">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-16">
+        {sections.map(section => (
+          <div class="group p-8 md:p-12 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-200 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
+              <div class="p-4 bg-white rounded-2xl shadow-sm text-brand-600 group-hover:scale-110 transition-transform">
+                <section.icon class="h-8 w-8" />
+              </div>
+              <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-900">{section.title}</h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                  {section.content}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <div class="pt-16 border-t border-slate-100">
+          <h2 class="text-3xl font-extrabold text-slate-900 mb-8">对我们的条款有疑问？</h2>
+          <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+            如果您对我们的服务条款有任何疑问或疑虑，请联系我们的法律部门进行澄清。
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href={`/${lang}/contact`} class="btn btn-primary px-10 py-4 font-bold shadow-xl shadow-brand-500/20">
+              联系法律团队
+            </a>
+            <a href={`/${lang}/privacy`} class="btn btn-secondary px-10 py-4 font-bold border-slate-200 hover:bg-slate-50 transition-all">
+              查看隐私政策
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="slate" className="bg-slate-50 border-y border-slate-100">
+    <div class="text-center max-w-3xl mx-auto py-12">
+      <a href={`/${lang}/`} class="inline-flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-widest hover:underline transition-all">
+        <ArrowLeft class="h-4 w-4" />
+        返回首页
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

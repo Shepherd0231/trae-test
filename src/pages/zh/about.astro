@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import FeatureItem from '../../components/FeatureItem.astro';
+import { Users, Lightbulb, Heart, Rocket, Shield } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const values = [
+  {
+    title: '客户至上',
+    description: '我们优先考虑客户的需求，并将客户满意度视为最高准则。',
+    icon: Heart,
+    color: 'text-rose-600 bg-rose-50',
+  },
+  {
+    title: '持续创新',
+    description: '我们拥抱变化，不断突破边界，寻找更好的问题解决方案。',
+    icon: Lightbulb,
+    color: 'text-amber-600 bg-amber-50',
+  },
+  {
+    title: '协同合作',
+    description: '我们的成功建立在团队合作以及与客户的紧密伙伴关系之上。',
+    icon: Users,
+    color: 'text-emerald-600 bg-emerald-50',
+  },
+  {
+    title: '诚实守信',
+    description: '我们在所有工作中始终保持最高标准的诚实和透明度。',
+    icon: Shield,
+    color: 'text-blue-600 bg-blue-50',
+  },
+];
+---
+
+<BaseLayout title={`关于我们 | 公司名称`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2069"
+        alt="About Us Background"
+        class="w-full h-full object-cover opacity-20"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
+    </div>
+    <div class="container-custom relative z-10 text-center text-white animate-in fade-in slide-in-from-bottom duration-700">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6">携手共创未来</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        我们是一支充满激情的专业团队，致力于通过创新的技术解决方案赋能企业。
+      </p>
+    </div>
+  </div>
+
+  <!-- Mission & Vision -->
+  <Section background="white">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">我们的使命</h2>
+        <p class="text-lg text-slate-600 leading-relaxed">
+          为各种规模的企业提供前沿的数字解决方案，助力其在现代经济中蓬勃发展。我们坚信技术的力量可以简化复杂问题并创造新机遇。
+        </p>
+        <p class="text-lg text-slate-600 leading-relaxed">
+          自2015年成立以来，我们已从一家小型初创公司成长为全球领先的企业级软件和服务提供商。对创新和客户成功的承诺始终是我们工作的核心。
+        </p>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2070"
+          alt="Team Collaboration"
+          class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 border-[12px] border-white/10 pointer-events-none rounded-2xl m-4"></div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Core Values -->
+  <Section
+    title="核心价值观"
+    subtitle="指导我们日常工作的基本原则。"
+    background="slate"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {values.map(value => (
+        <FeatureItem {...value} />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Timeline/History -->
+  <Section title="我们的历程" background="white">
+    <div class="max-w-4xl mx-auto space-y-12">
+      <div class="flex flex-col md:flex-row gap-8 items-center md:items-start group">
+        <div class="shrink-0 w-24 h-24 bg-brand-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-brand-500/30 group-hover:scale-110 transition-transform">
+          2015
+        </div>
+        <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 flex-grow shadow-sm group-hover:shadow-md transition-all">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">公司成立</h3>
+          <p class="text-slate-600 leading-relaxed">最初是一个在车库里工作的团队，对云计算的未来抱有宏大的愿景。</p>
+        </div>
+      </div>
+      
+      <div class="flex flex-col md:flex-row-reverse gap-8 items-center md:items-start group">
+        <div class="shrink-0 w-24 h-24 bg-brand-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-brand-500/30 group-hover:scale-110 transition-transform">
+          2018
+        </div>
+        <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 flex-grow shadow-sm group-hover:shadow-md transition-all text-right md:text-left">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">全球扩张</h3>
+          <p class="text-slate-600 leading-relaxed">在伦敦开设了第一家国际办事处，企业客户数量突破100家。</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-8 items-center md:items-start group">
+        <div class="shrink-0 w-24 h-24 bg-brand-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-brand-500/30 group-hover:scale-110 transition-transform">
+          2022
+        </div>
+        <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 flex-grow shadow-sm group-hover:shadow-md transition-all">
+          <h3 class="text-xl font-bold text-slate-900 mb-2">创新大奖</h3>
+          <p class="text-slate-600 leading-relaxed">凭借突破性的安全解决方案，被评为行业“最具创新力的科技公司”。</p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section background="brand" className="bg-brand-50">
+    <div class="text-center max-w-3xl mx-auto py-10">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">加入我们</h2>
+      <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+        我们一直在寻找有才华的人才加入我们的使命。探索我们的开放职位，开启您的下一个挑战。
+      </p>
+      <a href={`/${lang}/contact`} class="btn btn-primary px-10 py-4 text-lg font-bold shadow-xl shadow-brand-500/20">
+        加入我们
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

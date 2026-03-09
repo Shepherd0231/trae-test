@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { Search, ChevronDown, ChevronUp, Plus, Minus, HelpCircle } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const faqCategories = [
+  { id: 'general', name: 'General Information' },
+  { id: 'products', name: 'Products & Services' },
+  { id: 'billing', name: 'Billing & Subscriptions' },
+  { id: 'technical', name: 'Technical Support' },
+];
+
+const faqs = [
+  {
+    category: 'general',
+    question: 'What is your company mission?',
+    answer: 'Our mission is to empower businesses with innovative technology solutions that drive growth and digital transformation. We focus on cutting-edge software and hardware that solves real-world problems.',
+  },
+  {
+    category: 'general',
+    question: 'Where are your offices located?',
+    answer: 'Our headquarters is in Silicon Valley, California. We also have regional offices in London, Tokyo, and Sydney to serve our global client base.',
+  },
+  {
+    category: 'products',
+    question: 'Do you offer custom product development?',
+    answer: 'Yes, we specialize in building tailored solutions for enterprises with unique requirements. Contact our sales team to discuss your specific needs.',
+  },
+  {
+    category: 'products',
+    question: 'Can I trial your software before purchasing?',
+    answer: 'Most of our software products come with a 14-day free trial. You can request access through the product pages or by contacting support.',
+  },
+  {
+    category: 'billing',
+    question: 'What payment methods do you accept?',
+    answer: 'We accept all major credit cards, PayPal, and bank transfers for enterprise accounts. Billing can be handled monthly or annually.',
+  },
+  {
+    category: 'technical',
+    question: 'How do I contact technical support?',
+    answer: 'You can reach our support team via the contact form on our website, through live chat, or by emailing support@company.com. Priority support is available for enterprise clients.',
+  },
+];
+---
+
+<BaseLayout title={`FAQ | Company Name`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white animate-in fade-in slide-in-from-bottom duration-700">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-8">Frequently Asked Questions</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        Everything you need to know about our products, services, and how we can help your business.
+      </p>
+      
+      <!-- Search Box -->
+      <div class="mt-12 max-w-2xl mx-auto relative group">
+        <Search class="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-400 group-hover:text-brand-500 transition-colors" />
+        <input
+          type="text"
+          placeholder="Search for answers..."
+          class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-16 py-5 text-lg text-white placeholder:text-slate-400 focus:ring-4 focus:ring-brand-500/30 focus:bg-white focus:text-slate-900 focus:border-brand-500 outline-none transition-all shadow-2xl"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Content -->
+  <Section background="white">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
+      <!-- Sidebar Categories -->
+      <div class="lg:sticky lg:top-24 space-y-2">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 px-4">Categories</h3>
+        {faqCategories.map(cat => (
+          <button
+            class={`w-full text-left px-6 py-4 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-between group ${
+              cat.id === 'general'
+                ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20'
+                : 'bg-white text-slate-600 border border-slate-100 hover:border-brand-200 hover:bg-brand-50 hover:text-brand-600'
+            }`}
+          >
+            {cat.name}
+            {cat.id === 'general' ? <ChevronDown class="h-4 w-4" /> : <Plus class="h-4 w-4 text-slate-300 group-hover:text-brand-400" />}
+          </button>
+        ))}
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="lg:col-span-3 space-y-6">
+        {faqs.map(faq => (
+          <div class="group bg-white border border-slate-100 rounded-3xl overflow-hidden hover:border-brand-200 hover:shadow-xl transition-all duration-300">
+            <button
+              class="w-full flex items-center justify-between p-8 text-left transition-colors"
+              aria-expanded="false"
+            >
+              <h4 class="text-xl font-bold text-slate-900 pr-8 group-hover:text-brand-600 transition-colors">
+                {faq.question}
+              </h4>
+              <div class="shrink-0 p-2 rounded-full bg-slate-50 text-slate-400 group-hover:bg-brand-50 group-hover:text-brand-600 transition-all">
+                <Plus class="h-5 w-5 block group-aria-expanded:hidden" />
+                <Minus class="h-5 w-5 hidden group-aria-expanded:block" />
+              </div>
+            </button>
+            <div class="hidden px-8 pb-8 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div class="pt-4 border-t border-slate-50">
+                <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">
+                  {faq.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <!-- Contact Support CTA -->
+        <div class="mt-16 p-12 rounded-3xl bg-brand-50 border border-brand-100 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+          <div class="space-y-4">
+            <div class="flex items-center justify-center md:justify-start gap-4">
+              <div class="p-3 bg-white rounded-2xl shadow-sm text-brand-600">
+                <HelpCircle class="h-8 w-8" />
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900">Still have questions?</h3>
+            </div>
+            <p class="text-lg text-slate-600 max-w-xl">
+              Can't find the answer you're looking for? Please chat with our friendly team.
+            </p>
+          </div>
+          <a href={`/${lang}/contact`} class="btn btn-primary px-10 py-4 text-lg font-bold shadow-xl shadow-brand-500/20">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  // Simple FAQ Accordion Logic
+  const accordionButtons = document.querySelectorAll('[aria-expanded]');
+  
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      const content = button.nextElementSibling;
+      
+      // Close all others
+      accordionButtons.forEach(otherButton => {
+        if (otherButton !== button) {
+          otherButton.setAttribute('aria-expanded', 'false');
+          otherButton.nextElementSibling?.classList.add('hidden');
+        }
+      });
+
+      // Toggle current
+      button.setAttribute('aria-expanded', String(!expanded));
+      content?.classList.toggle('hidden');
+    });
+  });
+</script>

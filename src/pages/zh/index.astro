@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import FeatureItem from '../../components/FeatureItem.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { useTranslations, getLangFromUrl } from '../../i18n/utils';
+import { Zap, Shield, BarChart, Globe } from 'lucide-react';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const features = [
+  {
+    title: '顶尖技术',
+    description: '我们采用最新的技术，确保您的业务始终走在行业前沿。',
+    icon: Zap,
+    color: 'text-amber-600 bg-amber-50',
+  },
+  {
+    title: '极致安全',
+    description: '企业级安全特性，全面保护您的数据和客户信息。',
+    icon: Shield,
+    color: 'text-emerald-600 bg-emerald-50',
+  },
+  {
+    title: '数据驱动洞察',
+    description: '强大的分析功能，助您为业务做出明智的决策。',
+    icon: BarChart,
+    color: 'text-blue-600 bg-blue-50',
+  },
+  {
+    title: '全球化布局',
+    description: '利用我们的国际化基础设施，轻松将业务扩展至全球。',
+    icon: Globe,
+    color: 'text-indigo-600 bg-indigo-50',
+  },
+];
+
+const featuredProducts = [
+  {
+    id: 'p1',
+    name: '智能分析专业版',
+    description: '追踪业务增长和用户行为的终极工具。',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+    category: '软件',
+  },
+  {
+    id: 'p2',
+    name: '生态云存储',
+    description: '为现代企业设计的可持续、高性能云存储。',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2070',
+    category: '云服务',
+  },
+  {
+    id: 'p3',
+    name: '新一代安全中心',
+    description: '为您所有数字资产提供的全面安全解决方案。',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: '安全',
+  },
+];
+
+const latestNews = [
+  {
+    id: 'n1',
+    title: '云计算的未来',
+    excerpt: '探索人工智能和机器学习如何彻底改变云基础设施。',
+    date: '2026年3月15日',
+    author: '莎拉·约翰逊',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072',
+    category: '行业',
+  },
+  {
+    id: 'n2',
+    title: '可持续技术倡议',
+    excerpt: '我们对绿色能源的承诺以及减少数字运营碳足迹的努力。',
+    date: '2026年3月10日',
+    author: '迈克尔·陈',
+    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2070',
+    category: '公司',
+  },
+];
+---
+
+<BaseLayout title={`首页 | 公司名称`}>
+  <Hero />
+
+  <Section
+    title="为什么选择我们？"
+    subtitle="在飞速发展的时代，我们为您提供成功所需的工具和专业知识。"
+    background="white"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {features.map(feature => (
+        <FeatureItem {...feature} />
+      ))}
+    </div>
+  </Section>
+
+  <Section
+    title={t('home.products.title')}
+    subtitle={t('home.products.subtitle')}
+    background="slate"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {featuredProducts.map(product => (
+        <ProductCard {...product} />
+      ))}
+    </div>
+    <div class="mt-12 text-center">
+      <a href={`/${lang}/products`} class="btn btn-secondary px-8 py-3 text-lg">
+        查看所有产品
+      </a>
+    </div>
+  </Section>
+
+  <Section
+    title="我们的影响力"
+    subtitle="用数据说话。"
+    background="brand"
+    className="bg-brand-900 text-white"
+  >
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">500+</div>
+        <div class="text-slate-300 font-medium">全球客户</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">99.9%</div>
+        <div class="text-slate-300 font-medium">在线率保证</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">24/7</div>
+        <div class="text-slate-300 font-medium">专家支持</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">15+</div>
+        <div class="text-slate-300 font-medium">行业奖项</div>
+      </div>
+    </div>
+  </Section>
+
+  <Section
+    title={t('home.news.title')}
+    subtitle={t('home.news.subtitle')}
+    background="white"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {latestNews.map(news => (
+        <NewsCard {...news} />
+      ))}
+    </div>
+    <div class="mt-12 text-center">
+      <a href={`/${lang}/news`} class="btn btn-secondary px-8 py-3 text-lg">
+        更多新闻
+      </a>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section background="brand" className="py-20 bg-brand-600">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+      <div class="text-center md:text-left text-white max-w-2xl">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">准备好转型您的业务了吗？</h2>
+        <p class="text-xl text-brand-100 opacity-90 leading-relaxed">
+          立即联系我们进行免费咨询，了解我们的解决方案如何助您增长。
+        </p>
+      </div>
+      <div class="flex shrink-0 gap-4">
+        <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-8 py-4 text-lg font-bold shadow-xl">
+          立即联系
+        </a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

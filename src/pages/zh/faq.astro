@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { Search, ChevronDown, ChevronUp, Plus, Minus, HelpCircle } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const faqCategories = [
+  { id: 'general', name: '基本信息' },
+  { id: 'products', name: '产品与服务' },
+  { id: 'billing', name: '账单与订阅' },
+  { id: 'technical', name: '技术支持' },
+];
+
+const faqs = [
+  {
+    category: 'general',
+    question: '你们公司的使命是什么？',
+    answer: '我们的使命是通过创新的技术解决方案赋能企业，驱动增长和数字化转型。我们专注于开发解决现实世界问题的顶尖软件和硬件。',
+  },
+  {
+    category: 'general',
+    question: '你们的办公地点在哪里？',
+    answer: '我们的总部位于加利福尼亚州硅谷。我们还在伦敦、东京和悉尼设有区域办事处，以服务全球客户。',
+  },
+  {
+    category: 'products',
+    question: '你们提供定制产品开发吗？',
+    answer: '是的，我们擅长为具有独特需求的企业打造量身定制的解决方案。请联系我们的销售团队讨论您的具体需求。',
+  },
+  {
+    category: 'products',
+    question: '我可以在购买前试用你们的软件吗？',
+    answer: '我们的大多数软件产品都提供 14 天免费试用。您可以通过产品页面或联系支持团队申请试用权限。',
+  },
+  {
+    category: 'billing',
+    question: '你们接受哪些付款方式？',
+    answer: '我们接受所有主流信用卡、PayPal 以及企业账户的银行转账。账单可以按月或按年结算。',
+  },
+  {
+    category: 'technical',
+    question: '如何联系技术支持？',
+    answer: '您可以通过我们网站上的联系表单、在线聊天或发送邮件至 support@company.com 联系我们的支持团队。我们为企业客户提供优先支持。',
+  },
+];
+---
+
+<BaseLayout title={`常见问题 | 公司名称`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white animate-in fade-in slide-in-from-bottom duration-700">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-8">常见问题</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        了解有关我们产品、服务以及我们如何助力您业务的所有信息。
+      </p>
+      
+      <!-- Search Box -->
+      <div class="mt-12 max-w-2xl mx-auto relative group">
+        <Search class="absolute left-6 top-1/2 -translate-y-1/2 h-6 w-6 text-slate-400 group-hover:text-brand-500 transition-colors" />
+        <input
+          type="text"
+          placeholder="搜索答案..."
+          class="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-16 py-5 text-lg text-white placeholder:text-slate-400 focus:ring-4 focus:ring-brand-500/30 focus:bg-white focus:text-slate-900 focus:border-brand-500 outline-none transition-all shadow-2xl"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Content -->
+  <Section background="white">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
+      <!-- Sidebar Categories -->
+      <div class="lg:sticky lg:top-24 space-y-2">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 px-4">分类</h3>
+        {faqCategories.map(cat => (
+          <button
+            class={`w-full text-left px-6 py-4 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-between group ${
+              cat.id === 'general'
+                ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20'
+                : 'bg-white text-slate-600 border border-slate-100 hover:border-brand-200 hover:bg-brand-50 hover:text-brand-600'
+            }`}
+          >
+            {cat.name}
+            {cat.id === 'general' ? <ChevronDown class="h-4 w-4" /> : <Plus class="h-4 w-4 text-slate-300 group-hover:text-brand-400" />}
+          </button>
+        ))}
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="lg:col-span-3 space-y-6">
+        {faqs.map(faq => (
+          <div class="group bg-white border border-slate-100 rounded-3xl overflow-hidden hover:border-brand-200 hover:shadow-xl transition-all duration-300">
+            <button
+              class="w-full flex items-center justify-between p-8 text-left transition-colors"
+              aria-expanded="false"
+            >
+              <h4 class="text-xl font-bold text-slate-900 pr-8 group-hover:text-brand-600 transition-colors">
+                {faq.question}
+              </h4>
+              <div class="shrink-0 p-2 rounded-full bg-slate-50 text-slate-400 group-hover:bg-brand-50 group-hover:text-brand-600 transition-all">
+                <Plus class="h-5 w-5 block group-aria-expanded:hidden" />
+                <Minus class="h-5 w-5 hidden group-aria-expanded:block" />
+              </div>
+            </button>
+            <div class="hidden px-8 pb-8 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div class="pt-4 border-t border-slate-50">
+                <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">
+                  {faq.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <!-- Contact Support CTA -->
+        <div class="mt-16 p-12 rounded-3xl bg-brand-50 border border-brand-100 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+          <div class="space-y-4">
+            <div class="flex items-center justify-center md:justify-start gap-4">
+              <div class="p-3 bg-white rounded-2xl shadow-sm text-brand-600">
+                <HelpCircle class="h-8 w-8" />
+              </div>
+              <h3 class="text-2xl font-bold text-slate-900">还有疑问？</h3>
+            </div>
+            <p class="text-lg text-slate-600 max-w-xl">
+              找不到您想要的答案？请与我们的友好团队联系。
+            </p>
+          </div>
+          <a href={`/${lang}/contact`} class="btn btn-primary px-10 py-4 text-lg font-bold shadow-xl shadow-brand-500/20">
+            联系我们
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  // Simple FAQ Accordion Logic
+  const accordionButtons = document.querySelectorAll('[aria-expanded]');
+  
+  accordionButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      const content = button.nextElementSibling;
+      
+      // Close all others
+      accordionButtons.forEach(otherButton => {
+        if (otherButton !== button) {
+          otherButton.setAttribute('aria-expanded', 'false');
+          otherButton.nextElementSibling?.classList.add('hidden');
+        }
+      });
+
+      // Toggle current
+      button.setAttribute('aria-expanded', String(!expanded));
+      content?.classList.toggle('hidden');
+    });
+  });
+</script>

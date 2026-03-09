@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/Section.astro';
+import NewsCard from '../../../components/NewsCard.astro';
+import { Calendar, User, ArrowLeft, Share2, Facebook, Twitter, Linkedin, MessageSquare } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return [
+    { params: { id: 'n1' } },
+    { params: { id: 'n2' } },
+    { params: { id: 'n3' } },
+    { params: { id: 'n4' } },
+  ];
+}
+
+const { id } = Astro.params;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Mock data for the news article
+const article = {
+  id,
+  title: '云计算的未来',
+  excerpt: '探索人工智能和机器学习如何彻底改变各种规模企业的云基础设施和数据处理。',
+  content: `
+    <p class="text-xl text-slate-700 font-medium mb-10 leading-relaxed">
+      云计算的格局正在发生巨变。随着我们进入这个十年的深处，人工智能（AI）和机器学习（ML）的整合已不再是奢侈品，而是现代云基础设施的中流砥柱。
+    </p>
+    
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">AI 驱动的自动化</h2>
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      最重要的趋势之一是向自主云环境的转变。AI 算法现在能够管理资源分配、预测流量高峰，并在无需人工干预的情况下自动扩展基础设施。这不仅降低了运营成本，还确保了全天候的最佳性能。
+    </p>
+
+    <div class="my-16 rounded-3xl overflow-hidden shadow-2xl group">
+      <img
+        src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072"
+        alt="AI Cloud Illustration"
+        class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+      />
+    </div>
+
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">边缘计算的协同效应</h2>
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      边缘计算的兴起是另一个关键因素。通过在数据产生地附近进行处理，企业可以为关键任务应用实现近乎零的延迟。当与中心化的云能力结合时，这种混合模式兼具本地速度和全球规模的优势。
+    </p>
+
+    <blockquote class="my-12 p-10 bg-brand-50 border-l-8 border-brand-600 rounded-2xl italic text-2xl font-bold text-slate-900 leading-snug">
+      “云不再仅仅是存储数据的地方；它是驱动创新和数字转型的引擎。”
+    </blockquote>
+
+    <h2 class="text-3xl font-extrabold text-slate-900 mb-6 leading-tight">AI 时代的安全</h2>
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      随着威胁变得越来越复杂，我们的防御手段也必须随之升级。AI 驱动的安全系统现在可以实时检测异常，在潜在泄露造成损害之前识别它们。在数据成为公司最宝贵资产的时代，这种主动的网络安全方法至关重要。
+    </p>
+
+    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+      总之，在 AI、边缘计算和先进安全的共同推动下，云计算的未来充满光明。拥抱这些技术的企业将能够很好地在数字时代保持领先。
+    </p>
+  `,
+  date: '2026年3月15日',
+  author: '莎拉·约翰逊',
+  image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072',
+  category: '行业动态',
+  authorImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1974',
+};
+
+const relatedArticles = [
+  {
+    id: 'n2',
+    title: '可持续技术倡议',
+    excerpt: '我们对绿色能源的承诺以及减少数字运营碳足迹的努力。',
+    date: '2026年3月10日',
+    author: '迈克尔·陈',
+    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2070',
+    category: '公司新闻',
+  },
+  {
+    id: 'n3',
+    title: '智能分析专业版 2.0 发布',
+    excerpt: '我们分析工具的最新版本，具备实时预测建模功能。',
+    date: '2026年3月5日',
+    author: '艾米丽·戴维斯',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+    category: '产品发布',
+  },
+];
+---
+
+<BaseLayout title={`${article.title} | 公司新闻`}>
+  <!-- Article Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img
+        src={article.image}
+        alt={article.title}
+        class="w-full h-full object-cover opacity-30"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-slate-900"></div>
+    </div>
+    <div class="container-custom relative z-10 text-center text-white">
+      <a
+        href={`/${lang}/news`}
+        class="inline-flex items-center gap-2 text-brand-400 font-bold text-sm uppercase tracking-widest mb-8 hover:text-brand-300 transition-colors"
+      >
+        <ArrowLeft class="h-4 w-4" />
+        返回新闻列表
+      </a>
+      <div class="flex items-center justify-center gap-4 text-xs text-brand-400 font-bold uppercase tracking-widest mb-6">
+        <span class="bg-brand-900/50 px-3 py-1.5 rounded-full border border-brand-500/30">{article.category}</span>
+        <span class="text-slate-400">•</span>
+        <span class="text-slate-300">{article.date}</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-10 max-w-4xl mx-auto leading-tight">
+        {article.title}
+      </h1>
+      <div class="flex items-center justify-center gap-4">
+        <img src={article.authorImage} alt={article.author} class="w-12 h-12 rounded-full border-2 border-brand-500 object-cover" />
+        <div class="text-left">
+          <div class="text-white font-bold">{article.author}</div>
+          <div class="text-slate-400 text-xs uppercase tracking-widest">行业专家</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Content -->
+  <Section background="white" className="py-20 relative">
+    <div class="max-w-4xl mx-auto">
+      <!-- Article Body -->
+      <div class="prose prose-lg prose-slate max-w-none" set:html={article.content} />
+
+      <!-- Share & Tags -->
+      <div class="mt-20 pt-12 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div class="flex items-center gap-6">
+          <span class="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <Share2 class="h-4 w-4" /> 分享：
+          </span>
+          <div class="flex items-center gap-4">
+            <a href="#" class="p-3 rounded-full bg-slate-50 text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
+              <Facebook class="h-5 w-5" />
+            </a>
+            <a href="#" class="p-3 rounded-full bg-slate-50 text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
+              <Twitter class="h-5 w-5" />
+            </a>
+            <a href="#" class="p-3 rounded-full bg-slate-50 text-slate-400 hover:bg-brand-600 hover:text-white transition-all duration-300">
+              <Linkedin class="h-5 w-5" />
+            </a>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          {['云服务', '人工智能', '网络安全', '未来趋势'].map(tag => (
+            <span class="px-4 py-1.5 bg-slate-50 text-slate-600 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Author Bio -->
+      <div class="mt-16 p-8 md:p-12 bg-slate-50 rounded-3xl border border-slate-100 flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
+        <img src={article.authorImage} alt={article.author} class="w-24 h-24 rounded-2xl object-cover shadow-lg shrink-0" />
+        <div class="space-y-4">
+          <h4 class="text-xl font-bold text-slate-900">关于 {article.author}</h4>
+          <p class="text-slate-600 leading-relaxed">
+            莎拉·约翰逊是一位资深的科技记者和行业分析师，拥有超过 15 年报道商业与云计算交汇领域的经验。她的见解曾被全球各大主流科技刊物引用。
+          </p>
+          <div class="flex items-center justify-center md:justify-start gap-4">
+            <a href="#" class="text-brand-600 text-sm font-bold hover:underline">查看所有文章</a>
+            <span class="text-slate-300">|</span>
+            <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors"><Twitter class="h-4 w-4" /></a>
+            <a href="#" class="text-slate-400 hover:text-brand-600 transition-colors"><Linkedin class="h-4 w-4" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Related Articles -->
+  <Section title="您可能也喜欢" background="slate" className="py-20 border-t border-slate-200">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {relatedArticles.map(related => (
+        <NewsCard {...related} />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="brand" className="bg-brand-600 text-white">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
+      <div>
+        <h2 class="text-3xl font-bold mb-4">想要获取更多科技洞察？</h2>
+        <p class="text-brand-100 text-lg opacity-90 leading-relaxed max-w-xl">
+          订阅我们的时事通讯，直接在您的收件箱中接收最新新闻和行业趋势。
+        </p>
+      </div>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-xl">
+        立即订阅
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

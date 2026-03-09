@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Section from '../../../components/Section.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import { Search, Filter, ChevronRight, LayoutGrid, List } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const categories = ['全部', '软件', '云服务', '安全', '硬件'];
+
+const products = [
+  {
+    id: 'p1',
+    name: '智能分析专业版',
+    description: '追踪业务增长和用户行为的终极工具。',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+    category: '软件',
+  },
+  {
+    id: 'p2',
+    name: '生态云存储',
+    description: '为现代企业设计的可持续、高性能云存储。',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2070',
+    category: '云服务',
+  },
+  {
+    id: 'p3',
+    name: '新一代安全中心',
+    description: '为您所有数字资产提供的全面安全解决方案。',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: '安全',
+  },
+  {
+    id: 'p4',
+    name: '量子服务器 X1',
+    description: '为闪电般数据处理设计的新一代硬件。',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc48?auto=format&fit=crop&q=80&w=2070',
+    category: '硬件',
+  },
+  {
+    id: 'p5',
+    name: 'AI 视觉引擎',
+    description: '用于实时图像分析的高级计算机视觉算法。',
+    image: 'https://images.unsplash.com/photo-1555255707-c07966488bc0?auto=format&fit=crop&q=80&w=2070',
+    category: '软件',
+  },
+  {
+    id: 'p6',
+    name: '网络之盾 VPN',
+    description: '为您的整个组织提供安全、匿名的互联网访问。',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: '安全',
+  },
+];
+---
+
+<BaseLayout title={`产品中心 | 公司名称`}>
+  <!-- Hero Section -->
+  <div class="bg-slate-900 py-20 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-extrabold mb-6">我们的创新产品</h1>
+      <p class="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        探索为推动您的业务前进而设计的工具和解决方案。
+      </p>
+    </div>
+  </div>
+
+  <!-- Filter & Search -->
+  <Section background="slate" className="py-8 border-b border-slate-200">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+      <!-- Categories -->
+      <div class="flex flex-wrap items-center gap-2">
+        {categories.map(category => (
+          <button
+            class={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+              category === '全部'
+                ? 'bg-brand-600 text-white shadow-lg shadow-brand-500/20'
+                : 'bg-white text-slate-600 border border-slate-200 hover:border-brand-300 hover:text-brand-600'
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <!-- Search & View -->
+      <div class="flex items-center gap-4">
+        <div class="relative flex-grow min-w-[300px]">
+          <Search class="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder="搜索产品..."
+            class="w-full bg-white border border-slate-200 rounded-full px-12 py-3 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all"
+          />
+        </div>
+        <div class="hidden md:flex items-center border rounded-lg overflow-hidden bg-white">
+          <button class="p-3 text-brand-600 bg-brand-50 transition-colors">
+            <LayoutGrid class="h-4 w-4" />
+          </button>
+          <button class="p-3 text-slate-400 hover:bg-slate-50 transition-colors border-l">
+            <List class="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Products Grid -->
+  <Section background="white">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      {products.map(product => (
+        <ProductCard {...product} />
+      ))}
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-20 flex items-center justify-center gap-4">
+      <button class="btn btn-secondary px-4 py-2 disabled:opacity-50" disabled>
+        上一页
+      </button>
+      <div class="flex items-center gap-2">
+        <button class="w-10 h-10 rounded-lg bg-brand-600 text-white font-bold text-sm shadow-md">1</button>
+        <button class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:border-brand-300 hover:text-brand-600 transition-all">2</button>
+        <button class="w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 font-bold text-sm hover:border-brand-300 hover:text-brand-600 transition-all">3</button>
+      </div>
+      <button class="btn btn-secondary px-4 py-2 flex items-center gap-2">
+        下一页
+        <ChevronRight class="h-4 w-4" />
+      </button>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section background="brand" className="bg-brand-900">
+    <div class="text-center text-white max-w-3xl mx-auto py-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">需要定制化解决方案？</h2>
+      <p class="text-lg text-slate-300 mb-10 leading-relaxed">
+        我们的团队可以根据您的具体业务需求，助您打造完美的技术套件。
+      </p>
+      <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-10 py-4 text-lg font-bold shadow-xl">
+        咨询专家
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

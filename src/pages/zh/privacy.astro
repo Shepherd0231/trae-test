@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { Shield, Lock, Eye, FileText, Info, ArrowLeft } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = [
+  {
+    title: '1. 信息收集',
+    content: '我们在您在我们的网站上注册、表示有兴趣获取有关我们或我们的产品和服务的信息或以其他方式与我们联系时，收集您提供给我们的个人信息。这可能包括您的姓名、电子邮件地址、电话号码和公司名称。',
+    icon: Info,
+  },
+  {
+    title: '2. 信息使用',
+    content: '我们使用收集的信息来提供、运营和维护我们的服务，改进和个性化我们的网站，了解和分析您如何使用我们的网站，以及开发新的产品、服务、特性和功能。',
+    icon: Eye,
+  },
+  {
+    title: '3. 数据安全',
+    content: '我们实施适当的技术和组织安全措施，保护您的个人信息免受未经授权的访问、使用或披露。但是，请记住，没有任何互联网传输方法或电子存储方法是 100% 安全的。',
+    icon: Shield,
+  },
+  {
+    title: '4. 第三方服务',
+    content: '我们可能会使用第三方服务提供商来帮助我们运营业务和网站，或代表我们管理活动。这些第三方只有在代表我们执行这些任务时才能访问您的个人信息。',
+    icon: Lock,
+  },
+  {
+    title: '5. Cookie 和追踪',
+    content: '我们的网站使用“Cookie”来增强用户体验。您可以选择设置网络浏览器拒绝 Cookie，但由此可能导致网站的某些部分无法正常运行。',
+    icon: FileText,
+  },
+];
+---
+
+<BaseLayout title={`隐私政策 | 公司名称`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white animate-in fade-in slide-in-from-bottom duration-700">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-8">隐私政策</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        我们致力于保护您的隐私，并确保您的个人信息得到安全、透明的处理。
+      </p>
+      <div class="mt-12 text-sm font-bold text-slate-400 uppercase tracking-widest">最后更新：2026年3月</div>
+    </div>
+  </div>
+
+  <!-- Policy Content -->
+  <Section background="white">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-16">
+        {sections.map(section => (
+          <div class="group p-8 md:p-12 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-200 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
+              <div class="p-4 bg-white rounded-2xl shadow-sm text-brand-600 group-hover:scale-110 transition-transform">
+                <section.icon class="h-8 w-8" />
+              </div>
+              <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-900">{section.title}</h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                  {section.content}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <div class="pt-16 border-t border-slate-100">
+          <h2 class="text-3xl font-extrabold text-slate-900 mb-8">联系我们的隐私团队</h2>
+          <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+            如果您对本隐私政策或我们的数据处理实践有任何疑问，请随时联系我们的专属隐私团队。
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href={`/${lang}/contact`} class="btn btn-primary px-10 py-4 font-bold shadow-xl shadow-brand-500/20">
+              提交申请
+            </a>
+            <a href="mailto:privacy@company.com" class="btn btn-secondary px-10 py-4 font-bold border-slate-200 hover:bg-slate-50 transition-all">
+              发送邮件
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="slate" className="bg-slate-50 border-y border-slate-100">
+    <div class="text-center max-w-3xl mx-auto py-12">
+      <a href={`/${lang}/terms`} class="inline-flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-widest hover:underline transition-all">
+        查看服务条款
+        <ArrowLeft class="h-4 w-4 rotate-180" />
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

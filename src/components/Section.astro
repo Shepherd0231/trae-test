@@ -1,0 +1,37 @@
+---
+interface Props {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  className?: string;
+  background?: 'white' | 'slate' | 'brand';
+}
+
+const { id, title, subtitle, className = '', background = 'white' } = Astro.props;
+
+const bgClasses = {
+  white: 'bg-white',
+  slate: 'bg-slate-50',
+  brand: 'bg-brand-50',
+};
+---
+
+<section id={id} class={`section-padding ${bgClasses[background]} ${className}`}>
+  <div class="container-custom">
+    {(title || subtitle) && (
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        {title && (
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            {title}
+          </h2>
+        )}
+        {subtitle && (
+          <p class="text-lg text-slate-600 leading-relaxed">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    )}
+    <slot />
+  </div>
+</section>

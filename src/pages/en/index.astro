@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import FeatureItem from '../../components/FeatureItem.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import NewsCard from '../../components/NewsCard.astro';
+import { useTranslations, getLangFromUrl } from '../../i18n/utils';
+import { Zap, Shield, BarChart, Globe } from 'lucide-react';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const features = [
+  {
+    title: 'Cutting-Edge Tech',
+    description: 'We use the latest technology to ensure your business stays ahead of the curve.',
+    icon: Zap,
+    color: 'text-amber-600 bg-amber-50',
+  },
+  {
+    title: 'Unmatched Security',
+    description: 'Enterprise-grade security features to protect your data and your customers.',
+    icon: Shield,
+    color: 'text-emerald-600 bg-emerald-50',
+  },
+  {
+    title: 'Data-Driven Insights',
+    description: 'Powerful analytics to help you make informed decisions for your business.',
+    icon: BarChart,
+    color: 'text-blue-600 bg-blue-50',
+  },
+  {
+    title: 'Global Reach',
+    description: 'Scale your business globally with our international infrastructure.',
+    icon: Globe,
+    color: 'text-indigo-600 bg-indigo-50',
+  },
+];
+
+const featuredProducts = [
+  {
+    id: 'p1',
+    name: 'Smart Analytics Pro',
+    description: 'The ultimate tool for tracking business growth and user behavior.',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426',
+    category: 'Software',
+  },
+  {
+    id: 'p2',
+    name: 'EcoCloud Storage',
+    description: 'Sustainable and high-performance cloud storage for modern enterprises.',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=2070',
+    category: 'Cloud',
+  },
+  {
+    id: 'p3',
+    name: 'NexGen Security Hub',
+    description: 'A comprehensive security solution for all your digital assets.',
+    image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=2070',
+    category: 'Security',
+  },
+];
+
+const latestNews = [
+  {
+    id: 'n1',
+    title: 'The Future of Cloud Computing',
+    excerpt: 'Exploring how AI and machine learning are revolutionizing cloud infrastructure.',
+    date: 'March 15, 2026',
+    author: 'Sarah Johnson',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072',
+    category: 'Industry',
+  },
+  {
+    id: 'n2',
+    title: 'Sustainable Tech Initiatives',
+    excerpt: 'Our commitment to green energy and reducing the carbon footprint of digital operations.',
+    date: 'March 10, 2026',
+    author: 'Michael Chen',
+    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=2070',
+    category: 'Company',
+  },
+];
+---
+
+<BaseLayout title={`Home | Company Name`}>
+  <Hero />
+
+  <Section
+    title="Why Choose Us?"
+    subtitle="We provide the tools and expertise you need to succeed in a rapidly changing world."
+    background="white"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {features.map(feature => (
+        <FeatureItem {...feature} />
+      ))}
+    </div>
+  </Section>
+
+  <Section
+    title={t('home.products.title')}
+    subtitle={t('home.products.subtitle')}
+    background="slate"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {featuredProducts.map(product => (
+        <ProductCard {...product} />
+      ))}
+    </div>
+    <div class="mt-12 text-center">
+      <a href={`/${lang}/products`} class="btn btn-secondary px-8 py-3 text-lg">
+        View All Products
+      </a>
+    </div>
+  </Section>
+
+  <Section
+    title="Our Impact"
+    subtitle="Numbers that speak for themselves."
+    background="brand"
+    className="bg-brand-900 text-white"
+  >
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">500+</div>
+        <div class="text-slate-300 font-medium">Global Clients</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">99.9%</div>
+        <div class="text-slate-300 font-medium">Uptime Guarantee</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">24/7</div>
+        <div class="text-slate-300 font-medium">Expert Support</div>
+      </div>
+      <div>
+        <div class="text-4xl md:text-5xl font-extrabold text-brand-400 mb-2">15+</div>
+        <div class="text-slate-300 font-medium">Industry Awards</div>
+      </div>
+    </div>
+  </Section>
+
+  <Section
+    title={t('home.news.title')}
+    subtitle={t('home.news.subtitle')}
+    background="white"
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {latestNews.map(news => (
+        <NewsCard {...news} />
+      ))}
+    </div>
+    <div class="mt-12 text-center">
+      <a href={`/${lang}/news`} class="btn btn-secondary px-8 py-3 text-lg">
+        More News
+      </a>
+    </div>
+  </Section>
+
+  <!-- CTA Section -->
+  <Section background="brand" className="py-20 bg-brand-600">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+      <div class="text-center md:text-left text-white max-w-2xl">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready to transform your business?</h2>
+        <p class="text-xl text-brand-100 opacity-90 leading-relaxed">
+          Contact us today for a free consultation and see how our solutions can help you grow.
+        </p>
+      </div>
+      <div class="flex shrink-0 gap-4">
+        <a href={`/${lang}/contact`} class="btn bg-white text-brand-600 hover:bg-brand-50 px-8 py-4 text-lg font-bold shadow-xl">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

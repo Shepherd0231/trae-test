@@ -1,0 +1,55 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { ChevronRight } from 'lucide-react';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+interface Props {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  category?: string;
+}
+
+const { id, name, description, image, category } = Astro.props;
+---
+
+<div class="group relative bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+  <div class="aspect-square relative overflow-hidden">
+    <img
+      src={image}
+      alt={name}
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+    {category && (
+      <span class="absolute top-4 left-4 bg-brand-600 text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-lg">
+        {category}
+      </span>
+    )}
+  </div>
+  
+  <div class="p-6">
+    <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-600 transition-colors">
+      {name}
+    </h3>
+    <p class="text-slate-600 text-sm line-clamp-2 mb-6 leading-relaxed">
+      {description}
+    </p>
+    
+    <div class="flex items-center justify-between">
+      <a
+        href={`/${lang}/products/${id}`}
+        class="text-brand-600 font-semibold text-sm flex items-center group/link"
+      >
+        View Details
+        <ChevronRight class="h-4 w-4 ml-1 transition-transform group-hover/link:translate-x-1" />
+      </a>
+      
+      <button class="btn btn-secondary text-xs px-3 py-1.5 border-slate-200">
+        Inquiry
+      </button>
+    </div>
+  </div>
+</div>

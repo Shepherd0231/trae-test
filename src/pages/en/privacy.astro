@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import { Shield, Lock, Eye, FileText, Info, ArrowLeft } from 'lucide-react';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = [
+  {
+    title: '1. Information Collection',
+    content: 'We collect personal information that you provide to us when you register on our website, express an interest in obtaining information about us or our products and services, or otherwise contact us. This may include your name, email address, phone number, and company name.',
+    icon: Info,
+  },
+  {
+    title: '2. Use of Information',
+    content: 'We use the information we collect to provide, operate, and maintain our services, improve and personalize our website, understand and analyze how you use our website, and develop new products, services, features, and functionality.',
+    icon: Eye,
+  },
+  {
+    title: '3. Data Security',
+    content: 'We implement appropriate technical and organizational security measures to protect your personal information from unauthorized access, use, or disclosure. However, please remember that no method of transmission over the internet or method of electronic storage is 100% secure.',
+    icon: Shield,
+  },
+  {
+    title: '4. Third-Party Services',
+    content: 'We may use third-party service providers to help us operate our business and the website or administer activities on our behalf. These third parties may have access to your personal information only to perform these tasks on our behalf.',
+    icon: Lock,
+  },
+  {
+    title: '5. Cookies and Tracking',
+    content: 'Our website uses "cookies" to enhance the user experience. You can choose to set your web browser to refuse cookies, but some parts of the website may not function properly as a result.',
+    icon: FileText,
+  },
+];
+---
+
+<BaseLayout title={`Privacy Policy | Company Name`}>
+  <!-- Page Header -->
+  <div class="bg-slate-900 py-24 md:py-32 relative overflow-hidden">
+    <div class="container-custom relative z-10 text-center text-white animate-in fade-in slide-in-from-bottom duration-700">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-8">Privacy Policy</h1>
+      <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        We are committed to protecting your privacy and ensuring that your personal information is handled securely and transparently.
+      </p>
+      <div class="mt-12 text-sm font-bold text-slate-400 uppercase tracking-widest">Last Updated: March 2026</div>
+    </div>
+  </div>
+
+  <!-- Policy Content -->
+  <Section background="white">
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-16">
+        {sections.map(section => (
+          <div class="group p-8 md:p-12 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-200 hover:shadow-xl transition-all duration-300">
+            <div class="flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
+              <div class="p-4 bg-white rounded-2xl shadow-sm text-brand-600 group-hover:scale-110 transition-transform">
+                <section.icon class="h-8 w-8" />
+              </div>
+              <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-900">{section.title}</h2>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                  {section.content}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <div class="pt-16 border-t border-slate-100">
+          <h2 class="text-3xl font-extrabold text-slate-900 mb-8">Contact Our Privacy Team</h2>
+          <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+            If you have any questions about this Privacy Policy or our data practices, please feel free to contact our dedicated privacy team.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href={`/${lang}/contact`} class="btn btn-primary px-10 py-4 font-bold shadow-xl shadow-brand-500/20">
+              Submit a Request
+            </a>
+            <a href="mailto:privacy@company.com" class="btn btn-secondary px-10 py-4 font-bold border-slate-200 hover:bg-slate-50 transition-all">
+              Email Privacy Team
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section background="slate" className="bg-slate-50 border-y border-slate-100">
+    <div class="text-center max-w-3xl mx-auto py-12">
+      <a href={`/${lang}/terms`} class="inline-flex items-center gap-2 text-brand-600 font-bold text-sm uppercase tracking-widest hover:underline transition-all">
+        View Terms of Service
+        <ArrowLeft class="h-4 w-4 rotate-180" />
+      </a>
+    </div>
+  </Section>
+</BaseLayout>
